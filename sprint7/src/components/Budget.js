@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import {Panell, Button, Option, OptionsNumber} from './Styled'
 
 
-function Page2 () {
+function Budget () {
     //Array de objetos con opciones principales: web, seo y ads 
       //Para que se mantenga el input del cliente al actualizar la pantalla hay que hacer getItem en LocalStorage (hago condicional para que salga a 0 por defecto o con el input en caso de que haya)
     const [isChecked, setIsChecked] = useState(
@@ -42,7 +42,7 @@ function Page2 () {
     const totalBudget = isChecked.web + totalAdditional + isChecked.seo + isChecked.ads; 
 
     return(
-    <div>
+    <div style={{fontFamily:'arial'}}>
         <p>¿Qué quieres hacer?</p>
         <div>
             {/* WEB */}
@@ -134,4 +134,4 @@ function Page2 () {
     )
 }
 
-export default Page2;
+export default Budget;

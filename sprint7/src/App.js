@@ -1,6 +1,7 @@
-import Budget from './components/Budget'
+import Routes from "./application/routes";
 
-const App = () => <div><Budget/></div>;
+
+const App = () => (<Routes/>);
 
 
 export default App;
