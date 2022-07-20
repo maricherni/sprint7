@@ -12,8 +12,18 @@ function Page2 () {
             ads: 0
         })
 
+     //Contadores opciones adicionales de páginas e idiomas 
+     const [qtyPages, setQtyPages] = useState(0);
+     const [qtyLanguages, setQtyLanguages] = useState(0); 
+     
+     let totalAdditional = qtyPages * 30 + qtyLanguages * 30;
+     
+     if(!isChecked.web){
+         totalAdditional = 0;
+     }
+
     //Importe total del presupuesto
-    const totalBudget = isChecked.web + isChecked.seo + isChecked.ads; 
+    const totalBudget = isChecked.web + totalAdditional + isChecked.seo + isChecked.ads; 
 
     return(
     <div>
@@ -32,6 +42,46 @@ function Page2 () {
                 <label htmlFor="webPage">
                     Una página web (500€)
                 </label>
+                    {Boolean(isChecked.web) &&
+                    <div> 
+                        <Panell>
+                        <div>
+                            <Option>
+                                <label htmlFor="qtyPages">
+                                    Número de páginas 
+                                </label>
+                                <OptionsNumber>
+                                    <Button name="morePages" onClick={()=>setQtyPages(parseInt(qtyPages)+1)}>+</Button> {/*ParseInt evita que si empieza escribiendo y decide darle al botón se sume en modo número y no en modo string (añadiendo un 1) */}
+                                    <input 
+                                    type="number"
+                                    name="qtyPages"
+                                    style={{border:'none', width:'3rem'}} 
+                                    value={qtyPages}
+                                    onChange={(e)=>setQtyPages(e.target.value)}
+                                    />
+                                    <Button name="lessPages" onClick={()=>setQtyPages(qtyPages > 0 ? qtyPages - 1: qtyPages)}>-</Button>
+                                </OptionsNumber>
+                            </Option>
+                            <Option>
+                                <label htmlFor="qtyLanguages">
+                                    Número de idiomas 
+                                </label>
+                                <OptionsNumber>
+                                    <Button name="moreLanguages" onClick={()=>setQtyLanguages(parseInt(qtyLanguages)+1)}>+</Button>
+                                    <input
+                                    type="number"
+                                    name="qtyLanguages"
+                                    style={{border:'none', width:'3rem'}}
+                                    value={(qtyLanguages)}
+                                    onChange={(e)=>setQtyLanguages(e.target.value)}
+                                    />
+                                    <Button name="lessLanguages" onClick={()=>setQtyLanguages(qtyLanguages > 0 ? qtyLanguages - 1: qtyLanguages)}>-</Button>
+                                </OptionsNumber>
+                            </Option>
+                        </div>
+                        </Panell>
+                    </div>
+                    }
             </div>
             {/* SEO */}
             <div>
