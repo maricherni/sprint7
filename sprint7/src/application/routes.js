@@ -2,7 +2,7 @@ import Home from '../pages/home';
 import Budget from '../components/Budget'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-
+//Crea la ruta de los enlaces
 const Router = () =>(
     <BrowserRouter>
         <Routes>

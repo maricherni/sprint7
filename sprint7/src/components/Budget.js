@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import Nav from "./Nav";
 import {Panell, Button, Option, OptionsNumber} from './Styled'
 
 
@@ -42,7 +43,9 @@ function Budget () {
     const totalBudget = isChecked.web + totalAdditional + isChecked.seo + isChecked.ads; 
 
     return(
-    <div style={{fontFamily:'arial'}}>
+    
+    <div style={{fontFamily:'calibri'}}>
+        <Nav path='/' page= 'Home'></Nav>
         <p>¿Qué quieres hacer?</p>
         <div>
             {/* WEB */}
