@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Nav from "./Nav";
 import {Panell, Button, Option, OptionsNumber} from './Styled'
+import {PagesPopup, LanguagesPopup} from "./Popup";
 
 
 function Budget () {
@@ -45,7 +46,7 @@ function Budget () {
     return(
     
     <div style={{fontFamily:'calibri'}}>
-        <Nav path='/' page= 'Home'></Nav>
+        <Nav path='/' page= 'Home'></Nav> 
         <p>¿Qué quieres hacer?</p>
         <div>
             {/* WEB */}
@@ -78,7 +79,7 @@ function Budget () {
                                     value={qtyPages}
                                     onChange={(e)=>setQtyPages(e.target.value)}
                                     />
-                                    <Button name="lessPages" onClick={()=>setQtyPages(qtyPages > 0 ? qtyPages - 1: qtyPages)}>-</Button>
+                                    <Button name="lessPages" onClick={()=>setQtyPages(qtyPages > 0 ? qtyPages - 1: qtyPages)}>-</Button><PagesPopup qty={qtyPages}/>
                                 </OptionsNumber>
                             </Option>
                             <Option>
@@ -86,7 +87,7 @@ function Budget () {
                                     Número de idiomas 
                                 </label>
                                 <OptionsNumber>
-                                    <Button name="moreLanguages" onClick={()=>setQtyLanguages(parseInt(qtyLanguages)+1)}>+</Button>
+                                    <Button onClick={()=>setQtyLanguages(parseInt(qtyLanguages)+1)}>+</Button>
                                     <input
                                     type="number"
                                     name="qtyLanguages"
@@ -94,7 +95,7 @@ function Budget () {
                                     value={(qtyLanguages)}
                                     onChange={(e)=>setQtyLanguages(e.target.value)}
                                     />
-                                    <Button name="lessLanguages" onClick={()=>setQtyLanguages(qtyLanguages > 0 ? qtyLanguages - 1: qtyLanguages)}>-</Button>
+                                    <Button onClick={()=>setQtyLanguages(qtyLanguages > 0 ? qtyLanguages - 1: qtyLanguages)}>-</Button><LanguagesPopup qty={qtyLanguages}/>
                                 </OptionsNumber>
                             </Option>
                         </div>
