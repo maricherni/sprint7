@@ -38,7 +38,8 @@ export const LanguagesPopup = (props) =>{
         >
         <PopupActive>
                 <div>
-                    El sitio web estará en {props.qty} idiomas
+                Puedes elegir en cuántos idiomas quieres tu web.<br/>
+                El sitio web estará en {props.qty} idiomas
                 </div>
         </PopupActive>
       </Popup>
