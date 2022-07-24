@@ -1,8 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Nav from "./Nav";
-import {Panell, Button, Option, OptionsNumber} from './Styled'
+import {BudgetPage, BudgetRequest, BudgetReference, BudgetList, Panell, Button, Option, OptionsNumber} from './Styled'
 import {PagesPopup, LanguagesPopup} from "./Popup";
+import ListBudgets from "./PresupuestosLista";
 
 
 function Budget () {
@@ -27,26 +28,47 @@ function Budget () {
       totalAdditional = 0;
     }
         
+    //Referencia presupuesto y nombre cliente
+    const [budgetRef, setBudgetRef] = useState(localStorage.getItem('budget') ? JSON.parse(localStorage.getItem('budget')) : '');
+    const [customer, setCustomer] = useState(localStorage.getItem('customer') ? JSON.parse(localStorage.getItem('customer')) : '');
+
+    //Listado presupuestos
+    const [budgetList, setBudgetList] = useState(localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')):[]);
+
     //Almacenar el input del cliente en Local Storage
     useEffect(()=>{
         try{
          setIsChecked(isChecked)
          setQtyPages(qtyPages)
          setQtyLanguages(qtyLanguages)
+         setBudgetRef(budgetRef)
+         setCustomer(customer)
+         setBudgetList(budgetList)
          localStorage.setItem('pages', qtyPages)
          localStorage.setItem('languages', qtyLanguages)
          localStorage.setItem('checked', JSON.stringify(isChecked))
+         localStorage.setItem('budget', JSON.stringify(budgetRef))
+         localStorage.setItem('customer', JSON.stringify(customer))
+         localStorage.setItem('list', JSON.stringify(budgetList))
         } catch (error){
             console.error(error)
         }
-    },[qtyPages, qtyLanguages, isChecked])
+    },[qtyPages, qtyLanguages, isChecked, budgetRef, customer, budgetList])
+
+    const handleSaveBudget = () => {
+        const date = new Date().toLocaleString();
+        const newBudget = {isChecked, qtyPages, qtyLanguages, budgetRef, customer, date, totalBudget};
+        setBudgetList([...budgetList, newBudget]) 
+        console.log(budgetList)
+    }
     //Importe total del presupuesto
     const totalBudget = isChecked.web + totalAdditional + isChecked.seo + isChecked.ads; 
 
     return(
-    
-    <div style={{fontFamily:'calibri'}}>
-        <Nav path='/' page= 'Home'></Nav> 
+    <BudgetPage>
+    <BudgetRequest>
+    <Nav path='/' page= 'Home'></Nav>
+    <div>
         <p>¿Qué quieres hacer?</p>
         <div>
             {/* WEB */}
@@ -133,8 +155,48 @@ function Budget () {
             </div>
         </div>
         <p>Precio: {totalBudget} €</p>
-    </div>  
-    
+        <BudgetReference>
+        <div>
+            <input
+                type="text"
+                placeholder="Referencia del presupuesto"
+                value={budgetRef}
+                onChange={(e)=>setBudgetRef(e.target.value)}
+            />   
+            <input
+                type="text"
+                className="customer"
+                placeholder="Nombre del cliente"
+                value={customer}  
+                onChange={(e)=>setCustomer(e.target.value)}   
+                required           
+            />  
+            <button onClick={handleSaveBudget}>Guardar</button>      
+        </div>
+        </BudgetReference>
+    </div> 
+    </BudgetRequest>
+    <BudgetList>
+        <h3>MIS PRESUPUESTOS</h3>
+        {budgetList.map((budget, index)=>{
+            return(
+                <ListBudgets
+                    key={index}
+                    web={budget.isChecked.web}
+                    seo={budget.isChecked.seo}
+                    ads={budget.isChecked.ads}
+                    qtyPages={budget.qtyPages}
+                    qtyLanguages={budget.qtyLanguages}
+                    customer={budget.customer}
+                    budgetRef={budget.budgetRef}
+                    date={budget.date}
+                    totalBudget={budget.totalBudget}
+                />
+            )
+        })}
+        
+    </BudgetList> 
+    </BudgetPage>
     )
 }
 

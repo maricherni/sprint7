@@ -1,19 +1,21 @@
 import styled from "styled-components";
 
-//Enlaces de navegación
+//Barra de navegación y botones
+export const NavBar = styled.div`
+    border-bottom: solid orangered 0.1rem;
+`;
+
 export const NavButton = styled.div`
     a:link {
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size: 20px;
-        font-weight: bold;
         text-decoration: none;
         border-radius: 10px;
-        background-color: #eee7e7;
         padding: 0.2rem;
     }
 `;
 
-//Home style
+//PÁGINA PRINCIPAL
 export const HomeStyle = styled.div`
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 18px;
@@ -22,6 +24,18 @@ export const HomeStyle = styled.div`
         list-style-type: square;
         margin-bottom: 0.5rem;
     }
+`;
+
+//PÁGINA PRESUPUESTO
+export const BudgetPage = styled.div`
+    display: flex;
+`;
+
+//PARTE IZQUIERDA. Solicitud de presupuesto
+export const BudgetRequest = styled.div`
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 18px;
+    width:35%;
 `;
 
 //Desplegable al escoger opción web
@@ -61,6 +75,7 @@ export const Panell = styled.div `
         text-align: center;
     `
 
+//POPUPS
 //Info buttons
 export const PopupButton = styled.div`
   width: 20px;
@@ -86,4 +101,62 @@ export const PopupActive = styled.div `
     align-items: flex-end;
 `;
 
+//Inputs referencia presupuesto y nombre cliente
+export const BudgetReference = styled.div ` 
+   background-color: beige;
+   margin: 0.5rem;
+   padding: 0.7rem;
+   width: fit-content;
+   input{
+    display: block;
+    margin-bottom: 0.5rem;
+   }
+   button{
+    align-self: center;
+   }
+`;
 
+
+//PARTE DERECHA. Listado de presupuestos solicitados
+export const BudgetList = styled.div `
+    border-left: solid black 0.1rem;
+/*     border-radius: 5px; */
+    width: fit-content;
+    margin-top: 2rem;
+    padding: 1rem;
+    /* background-color: #fdece7; */
+    display: grid;
+    h3{
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        margin: 0;
+        padding: 0.3rem;
+        text-align: center;
+        background-color: #fc885e;
+    }
+`;
+
+//Elemento de la lista
+export const ListElement = styled.div`
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+font-size: 12px;
+ul{
+    list-style-type: none;
+}
+.listElements{
+   text-indent: -8px;
+   list-style: circle;
+}
+.fecha{
+    
+    padding-bottom: 0.3rem;
+    margin-bottom: 0.3rem;
+    border-bottom: solid black 0.1rem;
+}
+.total, .referencia{
+    font-weight: bold;
+}
+.referencia{
+    color: orangered;
+}
+
+`;
