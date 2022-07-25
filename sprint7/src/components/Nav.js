@@ -4,6 +4,7 @@ import { NavBar, NavButton } from "./Styled";
 
 //Navegación entre pantallas
 const Nav = (props) => 
+<div>
 <NavBar>
     <NavButton> 
         <div>
@@ -11,6 +12,7 @@ const Nav = (props) =>
         </div>
     </NavButton>
 </NavBar>
+</div>
 
 
 export default Nav;

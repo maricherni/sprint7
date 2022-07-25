@@ -55,19 +55,41 @@ function Budget () {
         }
     },[qtyPages, qtyLanguages, isChecked, budgetRef, customer, budgetList])
 
+    //Añadir presupuestos a la lista
     const handleSaveBudget = () => {
         const date = new Date().toLocaleString();
-        const newBudget = {isChecked, qtyPages, qtyLanguages, budgetRef, customer, date, totalBudget};
+        const miliseconds = Date.now();
+        const newBudget = {miliseconds, isChecked, qtyPages, qtyLanguages, budgetRef, customer, date, totalBudget};
         setBudgetList([...budgetList, newBudget]) 
         console.log(budgetList)
+    }
+
+    //Ordenar lista por presupuesto
+    const sortByBudget = () => {
+        const byName = budgetList.sort((a,b)=> (a.budgetRef < b.budgetRef)? -1 : 1)
+        setBudgetList([...byName])
+    }
+
+    //Ordenar lista por fecha
+    const sortByDate = () => {
+        const byDate = budgetList.sort((a,b) => a.miliseconds - b.miliseconds).reverse();
+        setBudgetList([...byDate]);
+       
+    }
+
+    //Ordenar lista por fecha
+    const sortInit = () => {
+        const restart = budgetList.sort((a,b) => a.miliseconds - b.miliseconds);
+        setBudgetList([...restart])
     }
     //Importe total del presupuesto
     const totalBudget = isChecked.web + totalAdditional + isChecked.seo + isChecked.ads; 
 
     return(
     <BudgetPage>
+        <header><Nav path='/' page= 'Home'></Nav></header>
     <BudgetRequest>
-    <Nav path='/' page= 'Home'></Nav>
+    
     <div>
         <p>¿Qué quieres hacer?</p>
         <div>
@@ -178,6 +200,14 @@ function Budget () {
     </BudgetRequest>
     <BudgetList>
         <h3>MIS PRESUPUESTOS</h3>
+        <span>
+        {/* Sort buttons */}
+        <p>Ordenar por: </p>
+        <button onClick={sortByBudget}>Referencia</button>
+        <button onClick={sortByDate}>Más reciente</button>
+        <button onClick={sortInit}>Restaurar orden</button>
+        
+        </span>
         {budgetList.map((budget, index)=>{
             return(
                 <ListBudgets

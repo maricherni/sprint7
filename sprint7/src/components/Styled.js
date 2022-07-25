@@ -3,6 +3,7 @@ import styled from "styled-components";
 //Barra de navegación y botones
 export const NavBar = styled.div`
     border-bottom: solid orangered 0.1rem;
+    
 `;
 
 export const NavButton = styled.div`
@@ -149,14 +150,16 @@ ul{
 .fecha{
     
     padding-bottom: 0.3rem;
-    margin-bottom: 0.3rem;
-    border-bottom: solid black 0.1rem;
+    margin-bottom: 0.2rem;
 }
 .total, .referencia{
     font-weight: bold;
 }
 .referencia{
     color: orangered;
+}
+.total{
+    margin-top: 0.2rem;
 }
 
 `;
