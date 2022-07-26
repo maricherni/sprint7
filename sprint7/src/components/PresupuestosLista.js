@@ -16,7 +16,7 @@ return(
             <li className="fecha">{`Fecha: ${date}`}</li>
             <li>Servicios solicitados: 
                 <ul>
-                    {web ? <li className= 'listElements'>Página web: {qtyPages} página(s) en {qtyLanguages} idioma(s)</li>: ''}    
+                    {web ? <li className= 'listElements'>Página web: <br />{qtyPages} página(s) <br /> {qtyLanguages} idioma(s)</li>: ''}    
                     {seo ? <li className= 'listElements' >Consultoría SEO</li>: ''}    
                     {ads ? <li className= 'listElements'>Campaña Google Ads</li>: ''}    
                 </ul>

@@ -17,7 +17,7 @@ export const PagesPopup = (props) =>{
         <PopupActive>
             <div>
                 Puedes elegir el número de páginas que quieres para tu web.<br/>
-                El sitio web estará compuesto de {props.qty} páginas.
+                El sitio web estará compuesto de {props.qty} página(s).
             </div>
         </PopupActive>
      </Popup> 
@@ -39,7 +39,7 @@ export const LanguagesPopup = (props) =>{
         <PopupActive>
                 <div>
                 Puedes elegir en cuántos idiomas quieres tu web.<br/>
-                El sitio web estará en {props.qty} idiomas
+                El sitio web estará en {props.qty} idioma(s).
                 </div>
         </PopupActive>
       </Popup>
