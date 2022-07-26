@@ -59,7 +59,8 @@ function Budget () {
     const handleSaveBudget = () => {
         const date = new Date().toLocaleString();
         const miliseconds = Date.now();
-        const newBudget = {miliseconds, isChecked, qtyPages, qtyLanguages, budgetRef, customer, date, totalBudget};
+        let hide = false;
+        const newBudget = {hide, miliseconds, isChecked, qtyPages, qtyLanguages, budgetRef, customer, date, totalBudget};
         setBudgetList([...budgetList, newBudget]) 
         console.log(budgetList)
     }
@@ -69,21 +70,30 @@ function Budget () {
         const byName = budgetList.sort((a,b)=> (a.budgetRef < b.budgetRef)? -1 : 1)
         setBudgetList([...byName])
     }
-
     //Ordenar lista por fecha
     const sortByDate = () => {
         const byDate = budgetList.sort((a,b) => a.miliseconds - b.miliseconds).reverse();
         setBudgetList([...byDate]);
        
     }
-
     //Ordenar lista por fecha
     const sortInit = () => {
         const restart = budgetList.sort((a,b) => a.miliseconds - b.miliseconds);
-        setBudgetList([...restart])
+        setBudgetList([...restart]);
+    }
+    //Buscar presupuesto por nombre
+    /* const [search, setSearch] = useState(''); */ // Si le añadimos botón
+    const searchBudget = (e) => {
+        budgetList.map(budget => {
+            return budget.budgetRef.startsWith(e.target.value)
+                ? budget.hide = false 
+                : budget.hide = true
+        })
+        setBudgetList([...budgetList]);
     }
     //Importe total del presupuesto
     const totalBudget = isChecked.web + totalAdditional + isChecked.seo + isChecked.ads; 
+
 
     return(
     <BudgetPage>
@@ -202,13 +212,25 @@ function Budget () {
         <h3>MIS PRESUPUESTOS</h3>
         <span>
         {/* Sort buttons */}
-        <p>Ordenar por: </p>
+        <label>Ordenar por: </label>
         <button onClick={sortByBudget}>Referencia</button>
         <button onClick={sortByDate}>Más reciente</button>
         <button onClick={sortInit}>Restaurar orden</button>
+        <br />
+        <label> Buscar por referencia: </label>
+        <input type="text" onChange={searchBudget} />
+        {/* <input 
+            type="text" 
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+        />
+        <button onClick={searchBudget}>Buscar</button> */} {/* Si le añadimos botón al buscador */}
         
         </span>
         {budgetList.map((budget, index)=>{
+            if(budget.hide){ 
+                return null
+            } else{
             return(
                 <ListBudgets
                     key={index}
@@ -223,6 +245,7 @@ function Budget () {
                     totalBudget={budget.totalBudget}
                 />
             )
+            }
         })}
         
     </BudgetList> 
