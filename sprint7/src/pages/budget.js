@@ -1,6 +1,6 @@
 import Budget from '../components/Budget';
 import Nav from '../components/Nav';
-import { HomeStyle, NavButton, NavBar, NavBarLink } from '../components/Styled';
+import { NavBar, NavBarLink } from '../components/Styled';
 
 const BudgetPath = () => 
 <div>
