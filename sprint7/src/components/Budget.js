@@ -1,7 +1,7 @@
 import React from "react";
 import {useNavigate} from 'react-router-dom';
 import { useState, useEffect } from "react";
-import {BudgetPage, BudgetRequest, BudgetReference, BudgetList, Panell, Button, Option, OptionsNumber, ListTitle, SortList, ListElementContainer} from './Styled'
+import {BudgetPage, BudgetRequest, BudgetReference, BudgetList, Panell, Button, Option, OptionsNumber, ListTitle, SortList, ListElementContainer, ContentList} from './Styled'
 import {PagesPopup, LanguagesPopup} from "./Popup";
 import ListBudgets from "./PresupuestosLista";
 
@@ -23,7 +23,7 @@ function Budget () {
     const [qtyPages, setQtyPages] = useState(localStorage.getItem('pages') ? (localStorage.getItem('pages')) : 0);
     const [qtyLanguages, setQtyLanguages] = useState(localStorage.getItem('languages') ? (localStorage.getItem('languages')) : 0); 
     
-    let totalAdditional = qtyPages * 30 + qtyLanguages * 30;
+    let totalAdditional = qtyPages * qtyLanguages * 30;
         
     if(!isChecked.web){
       totalAdditional = 0;
@@ -98,17 +98,29 @@ function Budget () {
         })
         setBudgetList([...budgetList]);
     }
+
+    //Borrar campos y vaciar local Storage
+    const reset = () => {
+        localStorage.clear();
+        setIsChecked({web: 0, seo: 0, ads: 0});
+        setQtyPages(0);
+        setQtyLanguages(0);
+        setBudgetRef('');
+        setCustomer('')                
+    }
+
     //Importe total del presupuesto
     const totalBudget = isChecked.web + totalAdditional + isChecked.seo + isChecked.ads; 
 
 
     return(
+        
     <BudgetPage>
         <BudgetRequest>    
         <div>
-            <p className="title">¿Qué quieres hacer?</p>
+            <h3 className="title">¿Qué quieres hacer?</h3>
             <div>
-                {/* WEB */}
+                {/* OPCIÓN WEB */}
                 <div>
                     <input
                         type="checkbox"
@@ -121,48 +133,49 @@ function Budget () {
                     <label htmlFor="webPage">
                         Una página web (500€)
                     </label>
+                        {/* Opciones web secundarias: páginas e idiomas */}
                         {Boolean(isChecked.web) &&
                         <div> 
                             <Panell>
-                            <div>
-                                <Option>
-                                    <label htmlFor="qtyPages">
-                                        Número de páginas 
-                                    </label>
-                                    <OptionsNumber>
-                                        <Button name="morePages" onClick={()=>setQtyPages(parseInt(qtyPages)+1)}>+</Button> {/*ParseInt evita que si empieza escribiendo y decide darle al botón se sume en modo número y no en modo string (añadiendo un 1) */}
-                                        <input 
-                                        type="number"
-                                        name="qtyPages"
-                                        style={{border:'none', width:'3rem'}} 
-                                        value={qtyPages}
-                                        onChange={(e)=>setQtyPages(e.target.value)}
-                                        />
-                                        <Button name="lessPages" onClick={()=>setQtyPages(qtyPages > 0 ? qtyPages - 1: qtyPages)}>-</Button><PagesPopup qty={qtyPages}/>
-                                    </OptionsNumber>
-                                </Option>
-                                <Option>
-                                    <label htmlFor="qtyLanguages">
-                                        Número de idiomas 
-                                    </label>
-                                    <OptionsNumber>
-                                        <Button onClick={()=>setQtyLanguages(parseInt(qtyLanguages)+1)}>+</Button>
-                                        <input
-                                        type="number"
-                                        name="qtyLanguages"
-                                        style={{border:'none', width:'3rem'}}
-                                        value={(qtyLanguages)}
-                                        onChange={(e)=>setQtyLanguages(e.target.value)}
-                                        />
-                                        <Button onClick={()=>setQtyLanguages(qtyLanguages > 0 ? qtyLanguages - 1: qtyLanguages)}>-</Button><LanguagesPopup qty={qtyLanguages}/>
-                                    </OptionsNumber>
-                                </Option>
-                            </div>
+                                <div>
+                                    <Option>
+                                        <label htmlFor="qtyPages">
+                                            Número de páginas 
+                                        </label>
+                                        <OptionsNumber>
+                                            <Button name="morePages" onClick={()=>setQtyPages(parseInt(qtyPages)+1)}>+</Button> {/*ParseInt evita que si empieza escribiendo y decide darle al botón se sume en modo número y no en modo string (añadiendo un 1) */}
+                                            <input 
+                                                type="number"
+                                                name="qtyPages"
+                                                style={{border:'none', width:'3rem'}} 
+                                                value={qtyPages}
+                                                onChange={(e)=>setQtyPages(e.target.value)}
+                                            />
+                                            <Button name="lessPages" onClick={()=>setQtyPages(qtyPages > 0 ? qtyPages - 1: qtyPages)}>-</Button><PagesPopup qty={qtyPages}/>
+                                        </OptionsNumber>
+                                    </Option>
+                                    <Option>
+                                        <label htmlFor="qtyLanguages">
+                                            Número de idiomas 
+                                        </label>
+                                        <OptionsNumber>
+                                            <Button onClick={()=>setQtyLanguages(parseInt(qtyLanguages)+1)}>+</Button>
+                                            <input
+                                                type="number"
+                                                name="qtyLanguages"
+                                                style={{border:'none', width:'3rem'}}
+                                                value={(qtyLanguages)}
+                                                onChange={(e)=>setQtyLanguages(e.target.value)}
+                                            />
+                                            <Button onClick={()=>setQtyLanguages(qtyLanguages > 0 ? qtyLanguages - 1: qtyLanguages)}>-</Button><LanguagesPopup qty={qtyLanguages}/>
+                                        </OptionsNumber>
+                                    </Option>
+                                </div>
                             </Panell>
                         </div>
                         }
                 </div>
-                {/* SEO */}
+                {/* OPCIÓN SEO */}
                 <div>
                     <input
                         type="checkbox"
@@ -176,7 +189,7 @@ function Budget () {
                         Una consultoría SEO (300€)
                     </label>
                 </div>
-                {/* ADS */}
+                {/* OPCIÓN ADS */}
                 <div>
                     <input
                         type="checkbox"
@@ -191,7 +204,9 @@ function Budget () {
                     </label>
                 </div>
             </div>
-            <p>Importe total: {totalBudget} €</p>
+            <p className="totalBudget">Importe total: {totalBudget} €</p>
+
+            {/* Referencia presupuesto y nombre cliente */}
             <BudgetReference>
             <div>
                 <input
@@ -211,57 +226,61 @@ function Budget () {
                 <button onClick={handleSaveBudget}>Guardar</button>      
             </div>
             </BudgetReference>
+            <button className='deleteButton' onClick={reset}>Borrar campos</button>
+            <button className='deleteButton' onClick={()=>setBudgetList([])}>Borrar lista</button>
         </div> 
         </BudgetRequest>
         <BudgetList>
             <ListTitle>
                 <h3>MIS PRESUPUESTOS</h3>
             </ListTitle>
-            <span>
+        
             {/* Sort buttons */}
-            <SortList>
-                <div className="sort">
-                    <label>Ordenar por: </label>
-                    <br />
-                    <button onClick={sortByBudget}>Referencia</button>
-                    <button onClick={sortByDate}>Más reciente</button>
-                    <button onClick={sortInit}>Restaurar orden</button>
-                </div>
-                <div className="search">
-                    <label> Buscar por referencia: </label>
-                    <input type="text" onChange={searchBudget} />
-                </div>
-            </SortList>
-            {/* <input 
-                type="text" 
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-            />
-            <button onClick={searchBudget}>Buscar</button> */} {/* Si le añadimos botón al buscador */}
+            <ContentList>
+                <SortList>
+                    <div className="sort">
+                        <label>Ordenar por: </label>
+                        <br />
+                        <button onClick={sortByBudget}>Referencia</button>
+                        <button onClick={sortByDate}>Más reciente</button>
+                        <button onClick={sortInit}>Restaurar orden</button>
+                    </div>
+                    <div className="search">
+                        <label> Buscar por referencia: </label>
+                        <input type="text" onChange={searchBudget} />
+                    </div>
+                </SortList>
+                {/* <input 
+                    type="text" 
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
+                <button onClick={searchBudget}>Buscar</button> */} {/* Si le añadimos botón al buscador */}
             
-            </span>
-            <ListElementContainer>
-                {budgetList.map((budget, index)=>{
-                    if(budget.hide){ 
-                        return null
-                    } else{
-                    return(
-                        <ListBudgets
-                            key={index}
-                            web={budget.isChecked.web}
-                            seo={budget.isChecked.seo}
-                            ads={budget.isChecked.ads}
-                            qtyPages={budget.qtyPages}
-                            qtyLanguages={budget.qtyLanguages}
-                            customer={budget.customer}
-                            budgetRef={budget.budgetRef}
-                            date={budget.date}
-                            totalBudget={budget.totalBudget}
-                        />
-                    )
-                    }
-                })}
-            </ListElementContainer>            
+                {/* Budget List */}
+                <ListElementContainer>
+                    {budgetList.map((budget, index)=>{
+                        if(budget.hide){ 
+                            return null
+                        } else{
+                            return(
+                                <ListBudgets
+                                    key={index}
+                                    web={budget.isChecked.web}
+                                    seo={budget.isChecked.seo}
+                                    ads={budget.isChecked.ads}
+                                    qtyPages={budget.qtyPages}
+                                    qtyLanguages={budget.qtyLanguages}
+                                    customer={budget.customer}
+                                    budgetRef={budget.budgetRef}
+                                    date={budget.date}
+                                    totalBudget={budget.totalBudget}
+                                />
+                            )
+                        }
+                    })}
+                </ListElementContainer> 
+            </ContentList>           
         </BudgetList> 
     </BudgetPage>
     )

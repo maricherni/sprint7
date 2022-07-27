@@ -50,8 +50,16 @@ export const BudgetRequest = styled.div`
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 18px;
     margin-right: 2.5rem;
-    .title{
+    .title, .totalBudget{
         font-weight: bold;
+    }
+    .deleteButton{
+        background-color: red;
+        border: solid darkgray 1px;
+        border-radius: 5px;
+        color: white;
+        padding: 0.4rem;
+        margin: 0.5rem;
     }
 `;
 
@@ -147,8 +155,7 @@ export const BudgetList = styled.div `
     border-radius: 5px;
     padding: 1rem;
     background-color: #fdece7;
-    display: grid;
-    grid-template-rows: 12% 25% 60%;   
+    display: block;
 `;
 //Título lista
 export const ListTitle = styled.div `
@@ -161,6 +168,10 @@ h3{
     border-radius: 5px;
 }
 `;
+
+export const ContentList = styled.div `
+
+`;
 //Elementos ordenar y busar
 export const SortList = styled.div `
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -172,6 +183,7 @@ button{
     border-radius: 5px;
     border: solid gray 1px;
     padding: 0.3rem;
+    width: 7rem;
 }
 .sort{
     margin-bottom: 0.3rem;
@@ -189,19 +201,19 @@ button{
 export const ListElementContainer = styled.div`
     display: flex;
     width: 26rem;
+    max-height: 30rem;
     flex-wrap: wrap;
-    overflow: auto;
-
+    overflow: scroll;
 `;
 //Elementos (presupuestos)
 export const ListElement = styled.div`
 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 font-size: 12px;
 width: 95%;
-height: 95%;
+height: 90%;
 border: solid black 0.1px;
 border-radius: 10px;
-margin-bottom: 0.1rem;
+margin: 0.8rem 0 0.1rem 0;
 ul{
     text-indent: -18px;
     list-style-type: none;
