@@ -1,5 +1,7 @@
+import Routes from "./application/routes";
 
-const App = () => <div>Home</div>;
+
+const App = () => (<Routes/>);
 
 
 export default App;
